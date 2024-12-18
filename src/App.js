@@ -2,6 +2,7 @@ import { React, useReducer, useState } from 'react';
 import logo from './logo.svg';
 
 import './App.css';
+import Timer from './timer';
 
 function App() {
 
@@ -49,6 +50,8 @@ function App() {
         <button onClick={handleReset}>Reset</button>
         <p>Username: {state.userName}</p>
         <p>Email: {state.email}</p>
+
+        <Timer />
       </header>
     </div>
   );
