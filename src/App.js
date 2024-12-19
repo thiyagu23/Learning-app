@@ -5,6 +5,8 @@ import './App.css';
 import Timer from './timer';
 import Loder from './loder';
 import ReusableDropdown from './reusableDropdown';
+import ThemeProvider from './themeContext';
+import DarkModeToggle from './drakTheme';
 
 function App() {
 
@@ -66,21 +68,24 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <input name='userName' placeholder='name' value={state.userName} onChange={(e) => handleFieldChange(e)}></input>
-        <input name='email' placeholder='email' value={state.email} onChange={(e) => handleFieldChange(e)}></input>
-        <button onClick={handleReset}>Reset</button>
-        <p>Username: {state.userName}</p>
-        <p>Email: {state.email}</p>
+    <ThemeProvider>
+      <div className="App">
+        <header className="App-header">
+          <DarkModeToggle />
+          <input name='userName' placeholder='name' value={state.userName} onChange={(e) => handleFieldChange(e)}></input>
+          <input name='email' placeholder='email' value={state.email} onChange={(e) => handleFieldChange(e)}></input>
+          <button onClick={handleReset}>Reset</button>
+          <p>Username: {state.userName}</p>
+          <p>Email: {state.email}</p>
 
-        <h1>select option: {showSelected}</h1>
-        <ReusableDropdown options={options} handleSelected={handleSelected} />
+          <h1>select option: {showSelected}</h1>
+          <ReusableDropdown options={options} handleSelected={handleSelected} />
 
-        <Timer />
-        <EnhancedLoder isLoading={isLoading} data={'Thiyagu'} />
-      </header>
-    </div>
+          <Timer />
+          <EnhancedLoder isLoading={isLoading} data={'Thiyagu'} />
+        </header>
+      </div>
+    </ThemeProvider>
   );
 }
 
