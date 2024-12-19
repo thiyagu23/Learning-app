@@ -1,6 +1,6 @@
 import { react, useState, useEffect } from 'react';
 
-const Timer = () => {
+const Timer = (props) => {
     const names = ["Mani", "Mani1", "Mani2", "Mani3", "Mani4",];
     const [couterIndex, setCounterIndex] = useState(0);
 
@@ -11,6 +11,9 @@ const Timer = () => {
 
     //     return () => clearInterval(render);
     // }, []);
+
+    console.log(props);
+
 
     useEffect(() => {
         // Set up side effects like API calls or timers
@@ -29,6 +32,7 @@ const Timer = () => {
     return (
         <div>
             <p>Names {names[couterIndex]}</p>
+            <p>name: {props.data}</p>
         </div>
     );
 };
