@@ -7,6 +7,7 @@ import Loder from './loder';
 import ReusableDropdown from './reusableDropdown';
 import ThemeProvider from './themeContext';
 import DarkModeToggle from './drakTheme';
+import useFetch from './Hooks/useFetch';
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
     email: ''
   };
   const [isLoading, setIsLoading] = useState(true);
+  const { data, loading, error } = useFetch("https://jsonplaceholder.typicode.com/posts");
 
   const EnhancedLoder = Loder(Timer);
 
@@ -67,6 +69,19 @@ function App() {
     setShowSelected(data);
   };
 
+  if (loading) {
+    return <p>Lodding..</p>;
+  }
+
+  if (error) {
+    return <p>error: {error}</p>;
+  }
+
+  if (data) {
+    console.log(data);
+
+  }
+
   return (
     <ThemeProvider>
       <div className="App">
@@ -83,6 +98,10 @@ function App() {
 
           <Timer />
           <EnhancedLoder isLoading={isLoading} data={'Thiyagu'} />
+
+          <ul>
+            {data?.map((item) => <li key={item.id}>{item.title}</li>)}
+          </ul>
         </header>
       </div>
     </ThemeProvider>
