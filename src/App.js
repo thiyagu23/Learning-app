@@ -1,4 +1,4 @@
-import { React, useReducer, useState, useEffect } from 'react';
+import { React, useReducer, useState, useEffect, useCallback } from 'react';
 import logo from './logo.svg';
 
 import './App.css';
@@ -8,6 +8,7 @@ import ReusableDropdown from './reusableDropdown';
 import ThemeProvider from './themeContext';
 import DarkModeToggle from './drakTheme';
 import useFetch from './Hooks/useFetch';
+import Child from './child';
 
 function App() {
 
@@ -17,34 +18,40 @@ function App() {
   };
   const [isLoading, setIsLoading] = useState(true);
   const { data, loading, error } = useFetch("https://jsonplaceholder.typicode.com/posts");
+   const [count, setCount] = useState(0);
 
   const EnhancedLoder = Loder(Timer);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false); // Stop loading after 1 second
-    }, 1000); // 1000ms = 1 second
+  
 
-    return () => clearTimeout(timer); // Cleanup timer on unmount
-  }, []);
+  const handleClick = useCallback(() => {
+    console.log('Button clicked');
+  },[])
+
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setIsLoading(false); // Stop loading after 1 second
+  //   }, 1000); // 1000ms = 1 second
+
+  //   return () => clearTimeout(timer); // Cleanup timer on unmount
+  // }, [])
 
   const formReducer = (state, action) => {
     switch (action.type) {
       case 'UPDATE_FIELD': {
         return {
           ...state,
-          [action.fieldName]: action.fieldValue
-        };
+          [action.fieldName] : action.fieldValue
+        }
       }
       case 'RESET_FIELD': {
-        return action.intialState;
-      }
+        return action.intialState
+        }
     }
-  };
+  }
 
 
-
-  const [state, dispatch] = useReducer(formReducer, intialState);
+  const [state, dispatch] = useReducer(formReducer, intialState)
 
   const handleFieldChange = (e) => {
     dispatch({
@@ -82,6 +89,7 @@ function App() {
 
   }
 
+
   return (
     <ThemeProvider>
       <div className="App">
@@ -98,6 +106,10 @@ function App() {
 
           <Timer />
           <EnhancedLoder isLoading={isLoading} data={'Thiyagu'} />
+
+          <h1>Count: {count}</h1>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+      <Child handleClick={handleClick} />
 
           <ul>
             {data?.map((item) => <li key={item.id}>{item.title}</li>)}
